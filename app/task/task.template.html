@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-8">
+    <button ng-click="$ctrl.addTask()">Add Task</button>
+    <div ng-repeat="task in $ctrl.tasks | orderBy:'order'">
+      <div class="well">
+        {{task.order}}
+        <input type="text" ng-model="task.name" placeholder="Task name"></input>
+        <input type="text" ng-model="task.estimated" placeholder="Estimated time"></input>
+        <span>{{task.actual}}</span>
+        <span>{{$ctrl.velocities[$ctrl.findIndexForId(task._id)] | number:2}}
+        <button ng-click="$ctrl.toggleTimer(task._id)">{{$ctrl.isTimerRunning[$ctrl.findIndexForId(task._id)] | StartStopFilter}}</button>
+        <button ng-click="$ctrl.changeOrder(task._id,1)">^</button>
+        <button ng-click="$ctrl.changeOrder(task._id,-1)">v</button>
+        <button ng-click="$ctrl.removeTask(task._id)">x</button>        
+        <button ng-click="$ctrl.update(task._id)">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <div class = "col-md-4">
+	<div class="panel panel-default">
+	  <div class="panel-heading">Graph</div>
+	  <div class="panel-body">
+		<canvas id="line" class="chart chart-line" chart-data="$ctrl.yAxis" chart-labels="$ctrl.xAxis">
+		</canvas>
+	  </div>
+	</div>
+  <ul><li ng-repeat="analysis in $ctrl.analysis"><span>{{analysis}}</span></li></ul>
+  </div>
+</div>
